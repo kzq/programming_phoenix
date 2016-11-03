@@ -14,7 +14,5 @@ defmodule Rumbl.User do
     |> cast(params, ~w(name username), [])
     |> validate_length(:username, min: 1, max: 20)
   end
-
-
 end
 
