@@ -3,8 +3,12 @@ defmodule Rumbl.UserController do
   alias Rumbl.User
   
   def index(conn, _params) do
-    users = Repo.all(User)
-    render conn, "index.html", users: users
+    case authenticate do
+      %Plus.Conn{halted: true} = conn -> conn
+      conn -> 
+        users = repo.all(User)
+        render conn, "index.html", users: users
+    end
   end
   
   def show(conn, %{"id"=> id}) do
@@ -27,5 +31,15 @@ defmodule Rumbl.UserController do
       {:error, changeset} -> 
         render(conn, "new.html", changeset: changeset)      
     end 
+  end
+
+  defp authenticate(conn) do 
+    if conn.assign.current_user do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You must be logged in to access this page")
+      |> halt()   
+    end  
   end
 end
