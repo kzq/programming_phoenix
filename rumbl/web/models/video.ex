@@ -1,8 +1,8 @@
 defmodule Rumbl.Video do
   use Rumbl.Web, :model
   
-  @required_fields  ~w(url title description)
-  @optional_fields   ~w(category_id) 
+  @required_fields ~w(url title description)
+  @optional_fields ~w(category_id) 
 
 
   schema "videos" do
@@ -18,9 +18,9 @@ defmodule Rumbl.Video do
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
-  def changeset(struct, params \\ %{}) do
+  def changeset(struct, params \\ :empty) do
     struct
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_required(@required_fields)
+    #|> validate_required(@required_fields)
   end
 end
